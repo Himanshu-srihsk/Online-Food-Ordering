@@ -9,11 +9,13 @@ import com.fun.repository.ResturantRepository;
 import com.fun.repository.UserRepository;
 import com.fun.request.CreateResturantRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ResturantServiceImpl implements ResturantService{
     @Autowired
     private ResturantRepository resturantRepository;
@@ -89,11 +91,19 @@ public class ResturantServiceImpl implements ResturantService{
         resturantDto.setTitle(resturant.getName());
         resturantDto.setImages(resturant.getImages());
         resturantDto.setId(resturantId);
-        if(user.getFavourites().contains(resturantDto)){
-            user.getFavourites().remove(resturantDto);
-        }else{
-            user.getFavourites().add(resturantDto);
-        }
+          Boolean isFavorited = false;
+          List<ResturantDto> favorites = user.getFavourites();
+          for(ResturantDto fav : favorites){
+              if(fav.getId().equals(resturantId)){
+                  isFavorited = true;
+                  break;
+              }
+          }
+          if(isFavorited){
+              favorites.removeIf(favourite -> favourite.getId().equals(resturantId));
+          }else{
+              favorites.add(resturantDto);
+          }
         userRepository.save(user);
         return resturantDto;
     }

@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/restaurants")
+@RequestMapping("/admin/resturants")
 public class AdminResturantController {
     @Autowired
     private ResturantService resturantService;
@@ -36,7 +36,7 @@ public class AdminResturantController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteResturant(@RequestBody CreateResturantRequest req,
+    public ResponseEntity<MessageResponse> deleteResturant(
                                                      @RequestHeader("Authorization") String jwt,
                                                      @PathVariable Long id) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
@@ -47,7 +47,7 @@ public class AdminResturantController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Resturant> updateResturantStatus(@RequestBody CreateResturantRequest req,
+    public ResponseEntity<Resturant> updateResturantStatus(
                                                            @RequestHeader("Authorization") String jwt,
                                                            @PathVariable Long id) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
@@ -56,7 +56,7 @@ public class AdminResturantController {
         return new ResponseEntity<>(resturant, HttpStatus.OK);
     }
     @GetMapping("/user")
-    public ResponseEntity<Resturant> findResturantByUserId(@RequestBody CreateResturantRequest req,
+    public ResponseEntity<Resturant> findResturantByUserId(
                                                            @RequestHeader("Authorization") String jwt
                                                            ) throws Exception {
         User user = userService.findUserByJwtToken(jwt);

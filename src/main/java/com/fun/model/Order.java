@@ -31,7 +31,8 @@ public class Order {
 	private List<OrderItem> items = new ArrayList<>();
 
 	private int totalItems;
-	private  int totalPrice;
+	private  Long totalPrice;
+	private String orderStatus;
 
 	//private Payment payment;
 
