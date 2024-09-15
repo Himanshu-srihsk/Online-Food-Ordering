@@ -21,13 +21,13 @@ public class CategoryServiceImpl implements CategoryService{
         Category category = new Category();
         category.setName(name);
         category.setResturant(resturant);
-        return null;
+        return categoryRepository.save(category);
     }
 
     @Override
     public List<Category> findCategoryByResturantId(Long id) throws Exception {
-        Resturant resturant = resturantService.getResturantByUserId(id);
-        return categoryRepository.findByResturantId(resturant.getId());
+        // Resturant resturant = resturantService.getResturantByUserId(id);
+        return categoryRepository.findByResturantId(id);
     }
 
     @Override

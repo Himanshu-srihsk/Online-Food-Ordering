@@ -1,5 +1,6 @@
 package com.fun.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class Order {
   	private Long id;
 	@ManyToOne
 	private User  customer;
+	private Long restaurantId;
+	@JsonIgnore
 	@ManyToOne
 	private Resturant resturant;
 	private  Long totalAmount;

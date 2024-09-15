@@ -33,7 +33,9 @@ public class CartController {
             @RequestBody UpdateCartItemRequest req,
             @RequestHeader("Authorization") String jwt
     ) throws Exception {
-        CartItem cartItem = cartService.updateCartItemQuantity(req.getCartItemid(),req.getQuantity());
+        System.out.println("req queanityt is"+req.getQuantity());
+        System.out.println("req cart item id is"+req.getCartItemId());
+        CartItem cartItem = cartService.updateCartItemQuantity(req.getCartItemId(),req.getQuantity());
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 

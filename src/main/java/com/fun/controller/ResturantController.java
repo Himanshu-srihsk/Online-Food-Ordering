@@ -39,6 +39,7 @@ public class ResturantController {
     public ResponseEntity<Resturant> findResturantById( @PathVariable Long id,
             @RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
+        System.out.println("id is"+id);
         Resturant resturant= resturantService.findResturantById(id);
         return new ResponseEntity<>(resturant, HttpStatus.OK);
     }

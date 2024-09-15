@@ -24,6 +24,7 @@ public class IngredientsServiceImpl implements IngredientsService{
     public IngredientsCategory createIngredientCategory(String name, Long resturantId) throws Exception {
         Resturant resturant = resturantService.findResturantById(resturantId);
         IngredientsCategory category = new IngredientsCategory();
+        System.out.println("name: " + name +    " resturantId: " + resturantId);
         category.setName(name);
         category.setResturant(resturant);
         return ingredientsCategoryRepository.save(category);

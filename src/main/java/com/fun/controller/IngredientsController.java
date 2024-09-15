@@ -22,6 +22,7 @@ public class IngredientsController {
     public ResponseEntity<IngredientsCategory> createIngredientCategory(
             @RequestBody IngredientsCategoryRequest ingredientsCategoryRequest
             ) throws Exception {
+           System.out.println("Creating IngredientsCategoryRequestis"+ ingredientsCategoryRequest);
            IngredientsCategory ingredientsCategory = ingredientsService.createIngredientCategory(
                    ingredientsCategoryRequest.getName(),
                    ingredientsCategoryRequest.getRestaurantId()
