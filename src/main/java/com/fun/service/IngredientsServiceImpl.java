@@ -2,7 +2,7 @@ package com.fun.service;
 
 import com.fun.model.IngredientsCategory;
 import com.fun.model.IngredientsItem;
-import com.fun.model.Resturant;
+import com.fun.model.Restaurant;
 import com.fun.repository.IngredientsCategoryRepository;
 import com.fun.repository.IngredientsItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +18,15 @@ public class IngredientsServiceImpl implements IngredientsService{
     @Autowired
     private IngredientsCategoryRepository ingredientsCategoryRepository;
     @Autowired
-    private ResturantService resturantService;
+    private RestaurantService restaurantService;
 
     @Override
     public IngredientsCategory createIngredientCategory(String name, Long resturantId) throws Exception {
-        Resturant resturant = resturantService.findResturantById(resturantId);
+        Restaurant resturant = restaurantService.findResturantById(resturantId);
         IngredientsCategory category = new IngredientsCategory();
         System.out.println("name: " + name +    " resturantId: " + resturantId);
         category.setName(name);
-        category.setResturant(resturant);
+        category.setRestaurant(resturant);
         return ingredientsCategoryRepository.save(category);
     }
 
@@ -41,22 +41,23 @@ public class IngredientsServiceImpl implements IngredientsService{
 
     @Override
     public List<IngredientsCategory> findIngredientCategoryByResturantId(Long id) throws Exception {
-        resturantService.findResturantById(id);
-        return ingredientsCategoryRepository.findByResturantId(id);
+        restaurantService.findResturantById(id);
+        return ingredientsCategoryRepository.findByRestaurantId(id);
     }
 
     @Override
     public List<IngredientsItem> findResturantIngredient(Long resturantId) throws Exception {
-        return ingredientsItemRepository.findByResturantId(resturantId);
+        return ingredientsItemRepository.findByRestaurantId(resturantId);
     }
 
     @Override
     public IngredientsItem createIngredientItem(Long resturantId, String ingredientName, Long categoryId) throws Exception {
-        Resturant resturant = resturantService.findResturantById(resturantId);
+        System.out.println("resturantId="+resturantId+ " categoryId="+categoryId+ " ingredientName"+ ingredientName);
+        Restaurant resturant = restaurantService.findResturantById(resturantId);
         IngredientsCategory category = findIngredientCategoryById(categoryId);
         IngredientsItem item = new IngredientsItem();
         item.setName(ingredientName);
-        item.setResturant(resturant);
+        item.setRestaurant(resturant);
         item.setCategory(category);
         IngredientsItem ingredientsItem = ingredientsItemRepository.save(item);
         category.getIngredients().add(ingredientsItem);

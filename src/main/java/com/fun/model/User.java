@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fun.dto.ResturantDto;
+import com.fun.dto.RestaurantDto;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,9 +27,9 @@ public class User {
   private  USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
   @JsonIgnore
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-  private List<Order> order = new ArrayList<>();
+  private List<Order> order;
   @ElementCollection
-  private List<ResturantDto>favourites = new ArrayList<>();
+  private List<RestaurantDto>favourites = new ArrayList<>();
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Address> addresses = new ArrayList<>();
 

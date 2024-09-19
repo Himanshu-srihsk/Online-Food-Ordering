@@ -19,6 +19,6 @@ public class IngredientsItem {
     private IngredientsCategory category;
     @ManyToOne
     @JsonIgnore
-    private Resturant resturant;
+    private Restaurant restaurant;
     private boolean inStock = true;
 }

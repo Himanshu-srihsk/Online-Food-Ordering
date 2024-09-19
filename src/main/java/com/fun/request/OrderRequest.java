@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 public class OrderRequest {
     private Address deliveryAddress;
-    private Long resturantId;
+    private Long restaurantId;
 }

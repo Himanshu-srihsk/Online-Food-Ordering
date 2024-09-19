@@ -2,7 +2,7 @@ package com.fun.service;
 
 import com.fun.model.Category;
 import com.fun.model.Food;
-import com.fun.model.Resturant;
+import com.fun.model.Restaurant;
 import com.fun.repository.FoodRepository;
 import com.fun.request.CreateFoodRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ public class FoodServiceImpl implements FoodService{
     @Autowired
     private FoodRepository foodRepository;
     @Override
-    public Food createFood(CreateFoodRequest req, Category category, Resturant resturant) {
+    public Food createFood(CreateFoodRequest req, Category category, Restaurant resturant) {
         Food food = new Food();
         food.setFoodCategory(category);
-        food.setResturant(resturant);
+        food.setRestaurant(resturant);
         food.setDescription(req.getDescription());
         food.setImages(req.getImages());
         food.setName(req.getName());
@@ -41,14 +41,18 @@ public class FoodServiceImpl implements FoodService{
     @Override
     public void deleteFood(Long foodId) throws Exception {
         Food food = findFoodById(foodId);
-        food.setResturant(null);
+        food.setRestaurant(null);
         foodRepository.save(food);
     }
 
     @Override
     public List<Food> getResturantsFood(Long restaurantId, boolean isVegitarian,
                                         boolean isNonveg, boolean isSeasonal, String foodCategory) {
-        List<Food> foods = foodRepository.findByResturantId(restaurantId);
+       // System.out.println("Food list before retrieved from database: " + restaurantId+ " isVe="+ isVegitarian);
+        List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
+
+       // System.out.println("Food list retrieved from database: " + foods);
+
         if(isVegitarian){
             foods = filterByVegetarian(foods,isVegitarian);
         }

@@ -1,7 +1,7 @@
 package com.fun.service;
 
 import com.fun.model.Category;
-import com.fun.model.Resturant;
+import com.fun.model.Restaurant;
 import com.fun.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,22 +12,22 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImpl implements CategoryService{
     @Autowired
-    private ResturantService resturantService;
+    private RestaurantService restaurantService;
     @Autowired
     public CategoryRepository categoryRepository;
     @Override
     public Category createCategory(String name, Long userId) throws Exception {
-        Resturant resturant = resturantService.getResturantByUserId(userId);
+        Restaurant resturant = restaurantService.getResturantByUserId(userId);
         Category category = new Category();
         category.setName(name);
-        category.setResturant(resturant);
+        category.setRestaurant(resturant);
         return categoryRepository.save(category);
     }
 
     @Override
     public List<Category> findCategoryByResturantId(Long id) throws Exception {
-        // Resturant resturant = resturantService.getResturantByUserId(id);
-        return categoryRepository.findByResturantId(id);
+         Restaurant resturant = restaurantService.findResturantById(id);
+        return categoryRepository.findByRestaurantId(id);
     }
 
     @Override

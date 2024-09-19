@@ -1,13 +1,12 @@
 package com.fun.controller;
 
-import com.fun.exception.UserException;
 import com.fun.model.Food;
-import com.fun.model.Resturant;
+import com.fun.model.Restaurant;
 import com.fun.model.User;
 import com.fun.request.CreateFoodRequest;
 import com.fun.response.MessageResponse;
 import com.fun.service.FoodService;
-import com.fun.service.ResturantService;
+import com.fun.service.RestaurantService;
 import com.fun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,13 +21,17 @@ public class AdminFoodController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ResturantService resturantService;
+    private RestaurantService restaurantService;
 
     @PostMapping
     public ResponseEntity<Food> createFood(@RequestBody CreateFoodRequest req,
                                            @RequestHeader("Authorization") String jwt) throws Exception {
+//        System.out.println("jwt is " + jwt);
+       // System.out.println("req resturant Id is " + req.getResturantId());
         User user = userService.findUserByJwtToken(jwt);
-        Resturant resturant = resturantService.findResturantById(req.getResturantId());
+//        Resturant resturant = resturantService.findResturantById(req.getResturantId());
+       // System.out.println("req user Id is " + user.getId());
+        Restaurant resturant = restaurantService.getResturantByUserId(user.getId());
         Food food = foodService.createFood(req,req.getCategory(),resturant);
         return new ResponseEntity<>(food, HttpStatus.CREATED);
     }

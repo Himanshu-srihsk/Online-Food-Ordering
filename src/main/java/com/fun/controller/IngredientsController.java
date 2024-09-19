@@ -22,7 +22,7 @@ public class IngredientsController {
     public ResponseEntity<IngredientsCategory> createIngredientCategory(
             @RequestBody IngredientsCategoryRequest ingredientsCategoryRequest
             ) throws Exception {
-           System.out.println("Creating IngredientsCategoryRequestis"+ ingredientsCategoryRequest);
+           //System.out.println("Creating IngredientsCategoryRequestis"+ ingredientsCategoryRequest);
            IngredientsCategory ingredientsCategory = ingredientsService.createIngredientCategory(
                    ingredientsCategoryRequest.getName(),
                    ingredientsCategoryRequest.getRestaurantId()
@@ -32,8 +32,10 @@ public class IngredientsController {
 
     @PostMapping()
     public ResponseEntity<IngredientsItem> createIngredientItem(
-            @RequestBody IngredientsItemRequest ingredientsItemRequest
+            @RequestBody IngredientsItemRequest ingredientsItemRequest,
+            @RequestHeader("Authorization") String token
     ) throws Exception {
+        System.out.println("token is "+ token);
         IngredientsItem ingredientsItem = ingredientsService.createIngredientItem(
                 ingredientsItemRequest.getResturantId(),
                 ingredientsItemRequest.getName(),

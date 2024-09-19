@@ -1,12 +1,9 @@
 package com.fun.controller;
 
 import com.fun.model.Food;
-import com.fun.model.Resturant;
 import com.fun.model.User;
-import com.fun.request.CreateFoodRequest;
-import com.fun.response.MessageResponse;
 import com.fun.service.FoodService;
-import com.fun.service.ResturantService;
+import com.fun.service.RestaurantService;
 import com.fun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +20,7 @@ public class FoodController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ResturantService resturantService;
+    private RestaurantService restaurantService;
 
     @GetMapping("/search")
     public ResponseEntity<List<Food>> searchFood(@RequestParam String name,

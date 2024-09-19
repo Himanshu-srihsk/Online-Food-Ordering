@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Embeddable
-public class ResturantDto {
+public class RestaurantDto {
   private String title;
   @Column(length = 1000)
   private List<String> images;

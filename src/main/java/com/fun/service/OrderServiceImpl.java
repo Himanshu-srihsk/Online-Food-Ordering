@@ -3,11 +3,9 @@ package com.fun.service;
 import com.fun.model.*;
 import com.fun.repository.*;
 import com.fun.request.OrderRequest;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,9 +23,13 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private ResturantService resturantService;
+    private RestaurantService restaurantService;
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
     @Override
     public Order createOrder(OrderRequest order, User user) throws Exception {
         Address shipAddress = order.getDeliveryAddress();
@@ -36,13 +38,16 @@ public class OrderServiceImpl implements OrderService{
             user.getAddresses().add(savedAddress);
             userRepository.save(user);
         }
-        Resturant resturant = resturantService.findResturantById(order.getResturantId());
+        Optional<Restaurant> resturant = restaurantRepository.findById(order.getRestaurantId());
+        if(resturant.isEmpty()) {
+            throw new Exception("Restaurant not found with id "+order.getRestaurantId());
+        }
         Order createdOrder =new Order();
         createdOrder.setCustomer(user);
         createdOrder.setCreatedAt(new Date());
         createdOrder.setDeliveryAddress(savedAddress);
         createdOrder.setOrderStatus("PENDING");
-        createdOrder.setResturant(resturant);
+        createdOrder.setRestaurant(resturant.get());
 
         Cart cart = cartService.findCartByUserId(user.getId());
         List<OrderItem> orderItems = new ArrayList<>();
@@ -60,7 +65,8 @@ public class OrderServiceImpl implements OrderService{
         createdOrder.setTotalPrice(totalPrice);
 
         Order savedOrder = orderRepository.save(createdOrder);
-        resturant.getOrders().add(savedOrder);
+        resturant.get().getOrders().add(savedOrder);
+        restaurantRepository.save(resturant.get());
         return createdOrder;
     }
 

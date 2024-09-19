@@ -21,10 +21,11 @@ public class Order {
   	private Long id;
 	@ManyToOne
 	private User  customer;
-	private Long restaurantId;
+
+	//private Long restaurantId;
 	@JsonIgnore
 	@ManyToOne
-	private Resturant resturant;
+	private Restaurant restaurant;
 	private  Long totalAmount;
 
 	private Date createdAt;
